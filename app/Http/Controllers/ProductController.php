@@ -6,7 +6,6 @@ use App\Product;
 use App\Category;
 use App\Http\Requests\StoreProductRequest;
 use Illuminate\Http\Request;
-use DB;
 
 class ProductController extends Controller
 {
