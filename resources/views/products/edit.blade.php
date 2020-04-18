@@ -38,6 +38,12 @@
             @if (!empty($product->photo))
                 <img src="{{ asset('storage/'.$product->photo) }}" height="100px">
                 <br />
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="delete" name="deletePhoto">
+                <label class="form-check-label" for="deletePhoto">
+                    Delete Photo?
+                </label>
+            </div>    
             @endif
             <br />
             <input type="file" name="photo" />

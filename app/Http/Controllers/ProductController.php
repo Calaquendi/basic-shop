@@ -107,6 +107,10 @@ $categories = Category::all();
             $path = '';
         }
 
+        if (!empty($request->input('deletePhoto'))) {
+            $path = '';
+        }
+
         $product->update([
             'name' => $request->name,
             'description' => $request->description,
