@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use App\Category;
 use App\Http\Requests\StoreProductRequest;
-use App\Product;
 use Illuminate\Http\Request;
+use DB;
 
 class ProductController extends Controller
 {
@@ -41,7 +42,13 @@ $categories = Category::all();
      */
     public function store(StoreProductRequest $request)
     {
-        $path = $request->file('photo')->store('photos', 'public');
+        if (is_null($request->file('photo'))) {
+            $path = '';
+        }
+        else {
+            $photoName = $request->name .'_'. rand() .'.'. $request->file('photo')->getClientOriginalExtension();
+            $path = $request->file('photo')->storeAs('photos', $photoName, 'public');
+        }
 
         Product::create([
             'name' => $request->name,
@@ -89,12 +96,24 @@ $categories = Category::all();
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
+
+        if (!empty($request->file('photo'))) {
+            $photoName = $request->name .'_'. rand() .'.'. $request->file('photo')->getClientOriginalExtension();
+            $path = $request->file('photo')->storeAs('photos', $photoName, 'public');
+        }
+        elseif (!empty($product->photo)) {
+            $path = $product->photo;
+        }
+        else {
+            $path = '';
+        }
+
         $product->update([
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
             'category_id' => $request->category_id,
-            'photo' => ''
+            'photo' => $path
         ]);
 
         return redirect()->route('products.index');

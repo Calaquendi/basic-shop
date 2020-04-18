@@ -35,8 +35,14 @@
 
             Photo:
             <br />
+            @if (!empty($product->photo))
+                <img src="{{ asset('storage/'.$product->photo) }}" height="100px">
+                <br />
+            @endif
+            <br />
             <input type="file" name="photo" />
             <br /><br />
+
 
             <input type="submit" class="btn btn-primary" value="Save" />
             <br /><br />
