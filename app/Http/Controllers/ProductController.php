@@ -6,6 +6,7 @@ use App\Product;
 use App\Category;
 use App\Http\Requests\StoreProductRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -108,6 +109,7 @@ $categories = Category::all();
         }
 
         if (!empty($request->input('deletePhoto'))) {
+            Storage::disk('public')->delete($product->photo);
             $path = '';
         }
 
@@ -132,6 +134,7 @@ $categories = Category::all();
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
+        Storage::disk('public')->delete($product->photo);
         $product->delete();
 
         return redirect()->route('products.index');
