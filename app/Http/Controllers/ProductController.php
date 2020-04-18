@@ -45,7 +45,7 @@ $categories = Category::all();
             $path = '';
         }
         else {
-            $photoName = $request->name .'_'. rand() .'.'. $request->file('photo')->getClientOriginalExtension();
+            $photoName = preg_replace('/\s+/', '-', $request->name) .'_'. rand() .'.'. $request->file('photo')->getClientOriginalExtension();
             $path = $request->file('photo')->storeAs('photos', $photoName, 'public');
         }
 
@@ -97,7 +97,7 @@ $categories = Category::all();
         $product = Product::findOrFail($id);
 
         if (!empty($request->file('photo'))) {
-            $photoName = $request->name .'_'. rand() .'.'. $request->file('photo')->getClientOriginalExtension();
+            $photoName = preg_replace('/\s+/', '-', $request->name) .'_'. rand() .'.'. $request->file('photo')->getClientOriginalExtension();
             $path = $request->file('photo')->storeAs('photos', $photoName, 'public');
         }
         elseif (!empty($product->photo)) {
