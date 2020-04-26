@@ -35,7 +35,7 @@
 
             Category:
             <br />
-            <select name="category_id" class="form-controll">
+            <select name="category_id" class="form-control">
                 @foreach($categories as $category)
                     <option value="{{ $category->id }}" @if ($category->id == old('category_id')) selected @endif>{{ $category->name }}</option>
                 @endforeach
